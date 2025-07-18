@@ -36,6 +36,9 @@ importers:
       eslint:
         specifier: ^9.30.1
         version: 9.31.0(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: ^8.10.1
+        version: 8.10.1(eslint@9.31.0(jiti@2.4.2))
       eslint-plugin-react-hooks:
         specifier: ^5.2.0
         version: 5.2.0(eslint@9.31.0(jiti@2.4.2))
@@ -746,6 +749,12 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  eslint-config-prettier@8.10.1:
+    resolution: {integrity: sha512-mXi3I2ghYZv02pKsUS5C2IRcYlOs3WFNYzYtLKX5s9mFju7BIAjxJqA4UG2qN2DAC0yUECdnfs5iGnyUdgOWzA==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
 
   eslint-plugin-react-hooks@5.2.0:
     resolution: {integrity: sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==}
@@ -1884,6 +1893,10 @@ snapshots:
       '@esbuild/win32-x64': 0.25.6
 
   escape-string-regexp@4.0.0: {}
+
+  eslint-config-prettier@8.10.1(eslint@9.31.0(jiti@2.4.2)):
+    dependencies:
+      eslint: 9.31.0(jiti@2.4.2)
 
   eslint-plugin-react-hooks@5.2.0(eslint@9.31.0(jiti@2.4.2)):
     dependencies:
