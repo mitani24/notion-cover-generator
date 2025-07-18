@@ -4,28 +4,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-Notionページ用の美しくパーソナライズされたカバー画像を生成するツール。現在は初期段階で、実装はこれから。
+Notion Cover Generator - Notionページ用のカバー画像を生成するWebアプリケーション
 
 ## 開発コマンド
 
 ```bash
-# パッケージマネージャーはpnpmを使用
-pnpm install
+# 開発サーバー起動
+pnpm dev
 
-# テスト実行（現在未実装）
-pnpm test
+# プロダクションビルド
+pnpm build
+
+# ビルド結果のプレビュー
+pnpm preview
+
+# 型チェックとLint
+pnpm lint
+
+# TypeScriptの型チェックのみ
+tsc --noEmit
 ```
+
+## 技術スタック
+
+- **React 19.1.0** - UIライブラリ
+- **TypeScript 5.8.3** - 型安全性
+- **Vite 7.0.4** - ビルドツール（React SWCプラグイン使用）
+- **pnpm** - パッケージマネージャー
 
 ## プロジェクト構造
 
-現在は最小限の構造のみ：
-- `package.json` - Node.jsプロジェクト設定
-- `README.md` - プロジェクトの簡単な説明
-- `LICENSE` - MITライセンス
+```
+src/
+├── main.tsx      # アプリケーションのエントリーポイント
+├── App.tsx       # ルートコンポーネント
+├── App.css       # アプリケーションスタイル
+├── index.css     # グローバルスタイル
+└── assets/       # 静的リソース
+```
 
-## 実装時の注意事項
+## 開発時の注意事項
 
-1. パッケージマネージャーはpnpm（v10.12.1）を使用
-2. Node.jsベースのプロジェクトとして初期化済み
-3. エントリーポイントは`index.js`を想定（まだ作成されていない）
-4. 画像生成ツールのため、Canvas APIやSVG生成ライブラリの使用を検討する可能性が高い
+1. **型安全性**: TypeScriptのstrict modeが有効。型エラーは必ず解消すること
+2. **ESLint**: React Hooks、React Refreshルールが有効
+3. **ビルド**: Vite + SWCで高速トランスパイル
+4. **スタイリング**: 現在は通常のCSSファイルを使用
+
+## 現在の状態
+
+プロジェクトは初期セットアップ済みだが、実際のNotion Cover Generator機能は未実装。
+Viteのデフォルトテンプレートから開始する必要がある。
