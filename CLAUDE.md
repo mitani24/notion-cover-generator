@@ -22,7 +22,7 @@ pnpm preview
 pnpm lint
 
 # TypeScriptの型チェックのみ
-tsc --noEmit
+pnpm type-check
 ```
 
 ## 技術スタック
