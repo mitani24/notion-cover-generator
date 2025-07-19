@@ -4,6 +4,7 @@ import {
   useImperativeHandle,
   forwardRef,
   useState,
+  useCallback,
 } from "react";
 import Splatfont2 from "/fonts/Splatfont2.ttf";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -23,6 +24,9 @@ const SUBTITLE_Y_OFFSET = SUBTITLE_FONT_SIZE / 2 + 10; // サブタイトル分�
 // 背景画像の透明度
 const BACKGROUND_OPACITY = 0.7;
 
+// デバウンス遅延時間（ミリ秒）
+const DEBOUNCE_DELAY = 300;
+
 interface CoverCanvasProps {
   backgroundImageUrl: string;
   title: string;
@@ -39,6 +43,7 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
     const [isLoading, setIsLoading] = useState(false);
     const [loadError, setLoadError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     const downloadImage = () => {
       const canvas = canvasRef.current;
@@ -156,10 +161,29 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
       setIsLoading(false);
     };
 
-    useEffect(() => {
-      drawCover();
+    const debouncedDrawCover = useCallback(() => {
+      // 既存のタイマーをクリア
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+
+      // 新しいタイマーを設定
+      debounceRef.current = setTimeout(() => {
+        drawCover();
+      }, DEBOUNCE_DELAY);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [backgroundImageUrl, title, subtitle]);
+
+    useEffect(() => {
+      debouncedDrawCover();
+
+      // クリーンアップ関数でタイマーをクリア
+      return () => {
+        if (debounceRef.current) {
+          clearTimeout(debounceRef.current);
+        }
+      };
+    }, [debouncedDrawCover]);
 
     return (
       <div className="relative">
