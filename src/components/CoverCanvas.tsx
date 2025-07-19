@@ -12,6 +12,9 @@ const SUBTITLE_FONT_SIZE = 48;
 const TITLE_Y_OFFSET = -TITLE_FONT_SIZE / 2 - 10; // タイトル分上に移動 + 少し余白
 const SUBTITLE_Y_OFFSET = SUBTITLE_FONT_SIZE / 2 + 10; // サブタイトル分下に移動 + 少し余白
 
+// 背景画像の透明度
+const BACKGROUND_OPACITY = 0.5;
+
 interface CoverCanvasProps {
   backgroundImageUrl: string;
   title: string;
@@ -68,7 +71,7 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
             });
 
             // 透明度を設定
-            ctx.globalAlpha = 0.5;
+            ctx.globalAlpha = BACKGROUND_OPACITY;
 
             // cover スタイルで描画
             const imgAspect = img.width / img.height;
