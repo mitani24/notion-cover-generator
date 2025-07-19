@@ -1,5 +1,17 @@
 import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 
+// Notionカバー画像の標準サイズ
+const CANVAS_WIDTH = 1920;
+const CANVAS_HEIGHT = 1280;
+
+// フォントサイズ定数
+const TITLE_FONT_SIZE = 96;
+const SUBTITLE_FONT_SIZE = 48;
+
+// テキスト配置の定数（中央からのオフセット、フォントサイズの半分を基準）
+const TITLE_Y_OFFSET = -TITLE_FONT_SIZE / 2 - 10; // タイトル分上に移動 + 少し余白
+const SUBTITLE_Y_OFFSET = SUBTITLE_FONT_SIZE / 2 + 10; // サブタイトル分下に移動 + 少し余白
+
 interface CoverCanvasProps {
   backgroundImageUrl: string;
   title: string;
@@ -37,11 +49,11 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
 
       const drawCover = async () => {
         // キャンバスクリア
-        ctx.clearRect(0, 0, 1920, 1280);
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         // 黒背景
         ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, 1920, 1280);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         // 背景画像の描画
         if (backgroundImageUrl) {
@@ -55,27 +67,27 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
               img.src = backgroundImageUrl;
             });
 
-            // 透明度を0.7に設定
-            ctx.globalAlpha = 0.7;
+            // 透明度を設定
+            ctx.globalAlpha = 0.5;
 
             // cover スタイルで描画
             const imgAspect = img.width / img.height;
-            const canvasAspect = 1920 / 1280;
+            const canvasAspect = CANVAS_WIDTH / CANVAS_HEIGHT;
 
             let drawWidth, drawHeight, offsetX, offsetY;
 
             if (imgAspect > canvasAspect) {
               // 画像が横長の場合
-              drawHeight = 1280;
+              drawHeight = CANVAS_HEIGHT;
               drawWidth = drawHeight * imgAspect;
-              offsetX = (1920 - drawWidth) / 2;
+              offsetX = (CANVAS_WIDTH - drawWidth) / 2;
               offsetY = 0;
             } else {
               // 画像が縦長の場合
-              drawWidth = 1920;
+              drawWidth = CANVAS_WIDTH;
               drawHeight = drawWidth / imgAspect;
               offsetX = 0;
-              offsetY = (1280 - drawHeight) / 2;
+              offsetY = (CANVAS_HEIGHT - drawHeight) / 2;
             }
 
             ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
@@ -103,14 +115,22 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
 
         // タイトルの描画
         if (title) {
-          ctx.font = "96px Splatfont2, sans-serif";
-          ctx.fillText(title, 960, 590);
+          ctx.font = `${TITLE_FONT_SIZE}px Splatfont2, sans-serif`;
+          ctx.fillText(
+            title,
+            CANVAS_WIDTH / 2,
+            CANVAS_HEIGHT / 2 + TITLE_Y_OFFSET,
+          );
         }
 
         // サブタイトルの描画
         if (subtitle) {
-          ctx.font = "48px Splatfont2, sans-serif";
-          ctx.fillText(subtitle, 960, 690);
+          ctx.font = `${SUBTITLE_FONT_SIZE}px Splatfont2, sans-serif`;
+          ctx.fillText(
+            subtitle,
+            CANVAS_WIDTH / 2,
+            CANVAS_HEIGHT / 2 + SUBTITLE_Y_OFFSET,
+          );
         }
       };
 
@@ -120,8 +140,8 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
     return (
       <canvas
         ref={canvasRef}
-        width={1920}
-        height={1280}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
         className="h-auto max-w-full rounded-md border border-gray-300 shadow-lg"
       />
     );
