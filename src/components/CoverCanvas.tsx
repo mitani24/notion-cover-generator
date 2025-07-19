@@ -13,7 +13,7 @@ const TITLE_Y_OFFSET = -TITLE_FONT_SIZE / 2 - 10; // タイトル分上に移動
 const SUBTITLE_Y_OFFSET = SUBTITLE_FONT_SIZE / 2 + 10; // サブタイトル分下に移動 + 少し余白
 
 // 背景画像の透明度
-const BACKGROUND_OPACITY = 0.5;
+const BACKGROUND_OPACITY = 0.7;
 
 interface CoverCanvasProps {
   backgroundImageUrl: string;
