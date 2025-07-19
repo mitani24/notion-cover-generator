@@ -5,7 +5,9 @@
       "Bash(ls:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm format:*)",
-      "Bash(pnpm lint:*)"
+      "Bash(pnpm lint:*)",
+      "Bash(mkdir:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   }
