@@ -5,10 +5,12 @@ export function useCoverParams() {
     defaultValue: "",
   });
 
-  const [title, setTitle] = useQueryState("title", { defaultValue: "" });
+  const [title, setTitle] = useQueryState("title", {
+    defaultValue: "ここにタイトルが入ります",
+  });
 
   const [subtitle, setSubtitle] = useQueryState("subtitle", {
-    defaultValue: "",
+    defaultValue: "ここにサブタイトルが入ります",
   });
 
   return {
