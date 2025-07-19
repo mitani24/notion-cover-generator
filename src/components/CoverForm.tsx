@@ -89,14 +89,15 @@ export function CoverForm({
           {showPresets && (
             <div className="mt-2 grid grid-cols-2 gap-2">
               {PRESET_IMAGES.map((preset) => (
-                <button
+                <Button
                   key={preset.id}
+                  variant="ghost"
                   type="button"
                   onClick={() => {
                     onBackgroundImageUrlChange(preset.url);
                     setShowPresets(false);
                   }}
-                  className="hover:border-primary relative overflow-hidden rounded-lg border transition-colors"
+                  className="hover:border-primary relative h-auto overflow-hidden rounded-lg border p-0 transition-colors"
                 >
                   <img
                     src={preset.url}
@@ -106,7 +107,7 @@ export function CoverForm({
                   <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-sm font-medium text-white">
                     {preset.name}
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
           )}
