@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "homepage": "https://mitani24.github.io/notion-cover-generator/",
   "keywords": [],
   "author": "mitani24",
   "license": "MIT",
