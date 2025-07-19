@@ -67,19 +67,20 @@ src/
 ```
 
 ### パスエイリアス
+
 - `@/*` → `./src/*` （Vite、TypeScript、shadcn/ui設定で統一）
 
 ## 開発時の注意事項
 
-1. **型安全性**: 
+1. **型安全性**:
    - TypeScriptのstrict modeが有効
    - 未使用変数・パラメータはエラー扱い
    - `noUncheckedSideEffectImports`有効（副作用インポートの型チェック）
-2. **ESLint**: 
+2. **ESLint**:
    - React Hooks、React Refreshルール有効
    - Prettier統合（eslint-config-prettier）
 3. **ビルド**: Vite + SWCで高速トランスパイル
-4. **スタイリング**: 
+4. **スタイリング**:
    - Tailwind CSS v4使用（@tailwindcss/vite）
    - Prettierでクラス名自動ソート（prettier-plugin-tailwindcss）
 5. **コードフォーマット**:
@@ -103,6 +104,7 @@ src/
 ## プロジェクトアーキテクチャ
 
 ### 設定ファイル構成
+
 - `tsconfig.json`: TypeScript設定のベース
 - `tsconfig.app.json`: アプリケーションコード用（ES2022ターゲット）
 - `tsconfig.node.json`: Vite設定用（ES2023ターゲット）
@@ -115,17 +117,20 @@ src/
 ## アプリケーションアーキテクチャ
 
 ### 状態管理
+
 - **nuqs** - URLクエリパラメータで設定を永続化
 - **useCoverParams** - 背景画像URL、タイトル、サブタイトルの管理
 - **React 19** - Suspenseを活用した非同期読み込み
 
 ### Canvas描画フロー
+
 1. **CoverCanvas** - Canvas要素の描画とダウンロード機能
 2. **背景画像読み込み** - URLから画像を非同期読み込み
 3. **テキスト描画** - カスタムフォント適用でタイトル・サブタイトル描画
 4. **透明度調整** - 背景画像の透明度を0.7に設定
 
 ### コンポーネント設計
+
 - **App** - Suspenseでラップしたルートコンポーネント
 - **CoverGenerator** - メインの生成UI
 - **CoverForm** - 設定入力フォーム
