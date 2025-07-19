@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import Splatfont2 from "/fonts/Splatfont2.ttf";
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertCircle } from "lucide-react";
 
 // Notionカバー画像の標準サイズ
 const CANVAS_WIDTH = 1920;
@@ -38,6 +38,7 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [loadError, setLoadError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const downloadImage = () => {
       const canvas = canvasRef.current;
@@ -53,107 +54,111 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
       downloadImage,
     }));
 
-    useEffect(() => {
+    const drawCover = async () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      const drawCover = async () => {
-        setIsLoading(true);
-        setLoadError(false);
+      setIsLoading(true);
+      setLoadError(false);
+      setErrorMessage("");
 
-        // キャンバスクリア
-        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      // キャンバスクリア
+      ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        // 黒背景
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      // 黒背景
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        // 背景画像の描画
-        if (backgroundImageUrl) {
-          try {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-
-            await new Promise<void>((resolve, reject) => {
-              img.onload = () => resolve();
-              img.onerror = () => reject();
-              img.src = backgroundImageUrl;
-            });
-
-            // 透明度を設定
-            ctx.globalAlpha = BACKGROUND_OPACITY;
-
-            // cover スタイルで描画
-            const imgAspect = img.width / img.height;
-            const canvasAspect = CANVAS_WIDTH / CANVAS_HEIGHT;
-
-            let drawWidth, drawHeight, offsetX, offsetY;
-
-            if (imgAspect > canvasAspect) {
-              // 画像が横長の場合
-              drawHeight = CANVAS_HEIGHT;
-              drawWidth = drawHeight * imgAspect;
-              offsetX = (CANVAS_WIDTH - drawWidth) / 2;
-              offsetY = 0;
-            } else {
-              // 画像が縦長の場合
-              drawWidth = CANVAS_WIDTH;
-              drawHeight = drawWidth / imgAspect;
-              offsetX = 0;
-              offsetY = (CANVAS_HEIGHT - drawHeight) / 2;
-            }
-
-            ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-          } catch (error) {
-            console.error("背景画像の読み込みに失敗しました:", error);
-            setLoadError(true);
-          } finally {
-            // 透明度をリセット
-            ctx.globalAlpha = 1.0;
-          }
-        }
-
-        // フォントの読み込みと設定
+      // 背景画像の描画
+      if (backgroundImageUrl) {
         try {
-          const font = new FontFace("Splatfont2", `url(${Splatfont2})`);
-          await font.load();
-          document.fonts.add(font);
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+
+          await new Promise<void>((resolve, reject) => {
+            img.onload = () => resolve();
+            img.onerror = () => reject();
+            img.src = backgroundImageUrl;
+          });
+
+          // 透明度を設定
+          ctx.globalAlpha = BACKGROUND_OPACITY;
+
+          // cover スタイルで描画
+          const imgAspect = img.width / img.height;
+          const canvasAspect = CANVAS_WIDTH / CANVAS_HEIGHT;
+
+          let drawWidth, drawHeight, offsetX, offsetY;
+
+          if (imgAspect > canvasAspect) {
+            // 画像が横長の場合
+            drawHeight = CANVAS_HEIGHT;
+            drawWidth = drawHeight * imgAspect;
+            offsetX = (CANVAS_WIDTH - drawWidth) / 2;
+            offsetY = 0;
+          } else {
+            // 画像が縦長の場合
+            drawWidth = CANVAS_WIDTH;
+            drawHeight = drawWidth / imgAspect;
+            offsetX = 0;
+            offsetY = (CANVAS_HEIGHT - drawHeight) / 2;
+          }
+
+          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
         } catch (error) {
-          console.error("フォントの読み込みに失敗しました:", error);
+          console.error("背景画像の読み込みに失敗しました:", error);
+          setLoadError(true);
+
+          setErrorMessage("画像の読み込みに失敗しました");
+        } finally {
+          // 透明度をリセット
+          ctx.globalAlpha = 1.0;
         }
+      }
 
-        // テキストの描画設定
-        ctx.fillStyle = "white";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+      // フォントの読み込みと設定
+      try {
+        const font = new FontFace("Splatfont2", `url(${Splatfont2})`);
+        await font.load();
+        document.fonts.add(font);
+      } catch (error) {
+        console.error("フォントの読み込みに失敗しました:", error);
+      }
 
-        // タイトルの描画
-        if (title) {
-          ctx.font = `${TITLE_FONT_SIZE}px Splatfont2, sans-serif`;
-          ctx.fillText(
-            title,
-            CANVAS_WIDTH / 2,
-            CANVAS_HEIGHT / 2 + TITLE_Y_OFFSET,
-          );
-        }
+      // テキストの描画設定
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
 
-        // サブタイトルの描画
-        if (subtitle) {
-          ctx.font = `${SUBTITLE_FONT_SIZE}px Splatfont2, sans-serif`;
-          ctx.fillText(
-            subtitle,
-            CANVAS_WIDTH / 2,
-            CANVAS_HEIGHT / 2 + SUBTITLE_Y_OFFSET,
-          );
-        }
+      // タイトルの描画
+      if (title) {
+        ctx.font = `${TITLE_FONT_SIZE}px Splatfont2, sans-serif`;
+        ctx.fillText(
+          title,
+          CANVAS_WIDTH / 2,
+          CANVAS_HEIGHT / 2 + TITLE_Y_OFFSET,
+        );
+      }
 
-        setIsLoading(false);
-      };
+      // サブタイトルの描画
+      if (subtitle) {
+        ctx.font = `${SUBTITLE_FONT_SIZE}px Splatfont2, sans-serif`;
+        ctx.fillText(
+          subtitle,
+          CANVAS_WIDTH / 2,
+          CANVAS_HEIGHT / 2 + SUBTITLE_Y_OFFSET,
+        );
+      }
 
+      setIsLoading(false);
+    };
+
+    useEffect(() => {
       drawCover();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [backgroundImageUrl, title, subtitle]);
 
     return (
@@ -170,8 +175,16 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
           </div>
         )}
         {loadError && !isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-md bg-black/50">
-            <p className="text-lg text-white">画像の読み込みに失敗しました</p>
+          <div className="absolute inset-0 flex items-center justify-center rounded-md bg-black/80 p-8">
+            <div className="flex max-w-md flex-col items-center gap-4 text-center">
+              <AlertCircle className="h-16 w-16 text-red-400" />
+              <div className="space-y-2">
+                <h3 className="text-xl font-semibold text-white">
+                  画像を読み込めませんでした
+                </h3>
+                <p className="text-gray-300">{errorMessage}</p>
+              </div>
+            </div>
           </div>
         )}
       </div>
