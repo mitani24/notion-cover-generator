@@ -41,6 +41,7 @@ pnpm format:check
 - **Tailwind CSS v4** - スタイリング（@tailwindcss/vite経由）
 - **shadcn/ui** - UIコンポーネントライブラリ（components.json設定済み）
 - **Lucide React** - アイコンライブラリ
+- **nuqs** - URLクエリパラメータのstate管理
 - **pnpm 10.12.1** - パッケージマネージャー（固定バージョン）
 - **Prettier** - コードフォーマッター（Tailwind CSSクラスソート付き）
 - **ESLint v9** - フラットコンフィグ使用
@@ -51,9 +52,16 @@ pnpm format:check
 src/
 ├── main.tsx      # アプリケーションのエントリーポイント
 ├── App.tsx       # ルートコンポーネント
-├── App.css       # アプリケーションスタイル
 ├── index.css     # グローバルスタイル（Tailwind CSS directives）
-├── assets/       # 静的リソース
+├── components/   # UIコンポーネント
+│   ├── CoverCanvas.tsx  # Canvas描画コンポーネント
+│   ├── CoverForm.tsx    # 設定フォームコンポーネント
+│   └── ui/       # shadcn/uiコンポーネント
+│       ├── button.tsx
+│       ├── input.tsx
+│       └── label.tsx
+├── hooks/        # カスタムフック
+│   └── useCoverParams.ts # カバー設定のURL状態管理
 └── lib/
     └── utils.ts  # ユーティリティ関数（cn関数など）
 ```
@@ -84,10 +92,13 @@ src/
 
 ## 現在の実装状態
 
-- プロジェクトは初期セットアップ済み
-- Tailwind CSSでスタイリングされた"Hello world!"のみ表示
-- アプリケーションタイトルは未更新（"Vite + React + TS"のまま）
-- 実際のNotion Cover Generator機能は未実装
+- **完全実装済み** - Notion Cover Generator機能が動作中
+- **Canvas API** - HTML5 Canvas使用でカバー画像生成
+- **リアルタイムプレビュー** - 設定変更が即座に反映
+- **URL状態管理** - nuqsでクエリパラメータと同期
+- **レスポンシブUI** - モバイル・デスクトップ対応
+- **画像ダウンロード** - Canvas画像のPNG出力
+- **カスタムフォント** - Splatfont2.ttf使用
 
 ## プロジェクトアーキテクチャ
 
@@ -101,9 +112,22 @@ src/
 - `eslint.config.js`: ESLint v9フラットコンフィグ（dist除外設定含む）
 - `components.json`: shadcn/ui設定（スタイル、パスエイリアス、コンポーネント配置）
 
-### 今後の実装方針
-Notion Cover Generatorとして、以下の機能実装が想定される：
-- カバー画像生成エンジン（Canvas API等）
-- テンプレート選択UI
-- カスタマイズオプション（色、テキスト、パターン等）
-- 画像ダウンロード機能
+## アプリケーションアーキテクチャ
+
+### 状態管理
+- **nuqs** - URLクエリパラメータで設定を永続化
+- **useCoverParams** - 背景画像URL、タイトル、サブタイトルの管理
+- **React 19** - Suspenseを活用した非同期読み込み
+
+### Canvas描画フロー
+1. **CoverCanvas** - Canvas要素の描画とダウンロード機能
+2. **背景画像読み込み** - URLから画像を非同期読み込み
+3. **テキスト描画** - カスタムフォント適用でタイトル・サブタイトル描画
+4. **透明度調整** - 背景画像の透明度を0.7に設定
+
+### コンポーネント設計
+- **App** - Suspenseでラップしたルートコンポーネント
+- **CoverGenerator** - メインの生成UI
+- **CoverForm** - 設定入力フォーム
+- **CoverCanvas** - Canvas描画とref経由でのダウンロード
+- **ui/** - shadcn/uiベースの再利用可能コンポーネント
