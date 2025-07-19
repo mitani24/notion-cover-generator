@@ -3,6 +3,7 @@ import { CoverCanvas, type CoverCanvasRef } from "@/components/CoverCanvas";
 import { CoverForm } from "@/components/CoverForm";
 import { useCoverParams } from "@/hooks/useCoverParams";
 import { Button } from "@/components/ui/button";
+import { Github } from "lucide-react";
 
 function CoverGenerator() {
   const canvasRef = useRef<CoverCanvasRef>(null);
@@ -22,9 +23,20 @@ function CoverGenerator() {
   return (
     <div className="p-6">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-8 scroll-m-20 text-4xl font-extrabold">
-          Notion Cover Generator
-        </h1>
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="scroll-m-20 text-4xl font-extrabold">
+            Notion Cover Generator
+          </h1>
+          <a
+            href="https://github.com/mitani24/notion-cover-generator"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors"
+          >
+            <Github size={16} />
+            GitHub
+          </a>
+        </div>
 
         <div className="grid gap-8 xl:grid-cols-2">
           <div className="space-y-6">
