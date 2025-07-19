@@ -1,4 +1,5 @@
 import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import Splatfont2 from "/fonts/Splatfont2.ttf";
 
 // Notionカバー画像の標準サイズ
 const CANVAS_WIDTH = 1920;
@@ -104,7 +105,7 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
 
         // フォントの読み込みと設定
         try {
-          const font = new FontFace("Splatfont2", "url(/fonts/Splatfont2.ttf)");
+          const font = new FontFace("Splatfont2", `url(${Splatfont2})`);
           await font.load();
           document.fonts.add(font);
         } catch (error) {
