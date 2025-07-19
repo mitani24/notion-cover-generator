@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 
 interface CoverCanvasProps {
   backgroundImageUrl: string;
@@ -6,12 +6,27 @@ interface CoverCanvasProps {
   subtitle: string;
 }
 
-export function CoverCanvas({
-  backgroundImageUrl,
-  title,
-  subtitle,
-}: CoverCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export interface CoverCanvasRef {
+  downloadImage: () => void;
+}
+
+export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
+  ({ backgroundImageUrl, title, subtitle }, ref) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const downloadImage = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const link = document.createElement("a");
+      link.download = "notion-cover.png";
+      link.href = canvas.toDataURL();
+      link.click();
+    };
+
+    useImperativeHandle(ref, () => ({
+      downloadImage,
+    }));
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -102,12 +117,15 @@ export function CoverCanvas({
     drawCover();
   }, [backgroundImageUrl, title, subtitle]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      width={1920}
-      height={1280}
-      className="h-auto max-w-full rounded-md border border-gray-300 shadow-lg"
-    />
-  );
-}
+    return (
+      <canvas
+        ref={canvasRef}
+        width={1920}
+        height={1280}
+        className="h-auto max-w-full rounded-md border border-gray-300 shadow-lg"
+      />
+    );
+  },
+);
+
+CoverCanvas.displayName = "CoverCanvas";

@@ -1,9 +1,11 @@
-import { Suspense } from "react";
-import { CoverCanvas } from "@/components/CoverCanvas";
+import { Suspense, useRef } from "react";
+import { CoverCanvas, type CoverCanvasRef } from "@/components/CoverCanvas";
 import { CoverForm } from "@/components/CoverForm";
 import { useCoverParams } from "@/hooks/useCoverParams";
+import { Button } from "@/components/ui/button";
 
 function CoverGenerator() {
+  const canvasRef = useRef<CoverCanvasRef>(null);
   const {
     backgroundImageUrl,
     setBackgroundImageUrl,
@@ -12,6 +14,10 @@ function CoverGenerator() {
     subtitle,
     setSubtitle,
   } = useCoverParams();
+
+  const handleDownload = () => {
+    canvasRef.current?.downloadImage();
+  };
 
   return (
     <div className="p-6">
@@ -36,10 +42,14 @@ function CoverGenerator() {
           <div className="space-y-6">
             <h2 className="text-2xl font-bold">プレビュー</h2>
             <CoverCanvas
+              ref={canvasRef}
               backgroundImageUrl={backgroundImageUrl}
               title={title}
               subtitle={subtitle}
             />
+            <Button onClick={handleDownload} className="w-full">
+              画像をダウンロード
+            </Button>
           </div>
         </div>
       </div>

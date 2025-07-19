@@ -8,7 +8,8 @@
       "Bash(pnpm lint:*)",
       "Bash(mkdir:*)",
       "mcp__ide__getDiagnostics",
-      "Bash(pnpm type-check:*)"
+      "Bash(pnpm type-check:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
