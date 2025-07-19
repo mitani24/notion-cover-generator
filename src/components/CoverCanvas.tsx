@@ -1,5 +1,12 @@
-import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  useState,
+} from "react";
 import Splatfont2 from "/fonts/Splatfont2.ttf";
+import { Loader2 } from "lucide-react";
 
 // Notionカバー画像の標準サイズ
 const CANVAS_WIDTH = 1920;
@@ -29,6 +36,8 @@ export interface CoverCanvasRef {
 export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
   ({ backgroundImageUrl, title, subtitle }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadError, setLoadError] = useState(false);
 
     const downloadImage = () => {
       const canvas = canvasRef.current;
@@ -52,6 +61,9 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
       if (!ctx) return;
 
       const drawCover = async () => {
+        setIsLoading(true);
+        setLoadError(false);
+
         // キャンバスクリア
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -97,6 +109,7 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
             ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
           } catch (error) {
             console.error("背景画像の読み込みに失敗しました:", error);
+            setLoadError(true);
           } finally {
             // 透明度をリセット
             ctx.globalAlpha = 1.0;
@@ -136,18 +149,32 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
             CANVAS_HEIGHT / 2 + SUBTITLE_Y_OFFSET,
           );
         }
+
+        setIsLoading(false);
       };
 
       drawCover();
     }, [backgroundImageUrl, title, subtitle]);
 
     return (
-      <canvas
-        ref={canvasRef}
-        width={CANVAS_WIDTH}
-        height={CANVAS_HEIGHT}
-        className="h-auto max-w-full rounded-md border border-gray-300 shadow-lg"
-      />
+      <div className="relative">
+        <canvas
+          ref={canvasRef}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          className="h-auto max-w-full rounded-md border border-gray-300 shadow-lg"
+        />
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-md bg-black/50">
+            <Loader2 className="h-12 w-12 animate-spin text-white" />
+          </div>
+        )}
+        {loadError && !isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-md bg-black/50">
+            <p className="text-lg text-white">画像の読み込みに失敗しました</p>
+          </div>
+        )}
+      </div>
     );
   },
 );
