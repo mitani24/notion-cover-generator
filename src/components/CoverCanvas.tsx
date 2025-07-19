@@ -18,8 +18,8 @@ const TITLE_FONT_SIZE = 96;
 const SUBTITLE_FONT_SIZE = 48;
 
 // テキスト配置の定数（中央からのオフセット、フォントサイズの半分を基準）
-const TITLE_Y_OFFSET = -TITLE_FONT_SIZE / 2 - 10; // タイトル分上に移動 + 少し余白
-const SUBTITLE_Y_OFFSET = SUBTITLE_FONT_SIZE / 2 + 10; // サブタイトル分下に移動 + 少し余白
+const TITLE_Y_OFFSET = -TITLE_FONT_SIZE / 2 - 0; // タイトル分上に移動 + 少し余白
+const SUBTITLE_Y_OFFSET = SUBTITLE_FONT_SIZE / 2 + 20; // サブタイトル分下に移動 + 少し余白
 
 // 背景画像の透明度
 const BACKGROUND_OPACITY = 0.7;
