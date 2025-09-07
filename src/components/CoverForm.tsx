@@ -11,12 +11,12 @@ const PRESET_IMAGES = [
   },
   {
     id: "pattern-mountain",
-    url: "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1920&h=1080&fit=crop",
+    url: "https://images.unsplash.com/photo-1501621965065-c6e1cf6b53e2?w=1920&h=1080&fit=crop",
     name: "山",
   },
   {
     id: "pattern-desert",
-    url: "https://images.unsplash.com/photo-1529927066849-305fb31a3ec8?w=1920&h=1080&fit=crop",
+    url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&h=1080&fit=crop",
     name: "砂漠",
   },
   {
@@ -36,7 +36,7 @@ const PRESET_IMAGES = [
   },
   {
     id: "pattern-aurora",
-    url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1920&h=1080&fit=crop",
+    url: "https://images.unsplash.com/photo-1444090542259-0af8fa96557e?w=1920&h=1080&fit=crop",
     name: "オーロラ",
   },
   {
