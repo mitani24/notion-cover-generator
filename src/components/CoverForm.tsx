@@ -5,44 +5,44 @@ import { useState } from "react";
 
 const PRESET_IMAGES = [
   {
-    id: "gradient-1",
-    url: "https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&h=1080&fit=crop",
-    name: "グラデーション1",
+    id: "pattern-forest",
+    url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&h=1080&fit=crop",
+    name: "森林",
   },
   {
-    id: "gradient-2",
-    url: "https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1920&h=1080&fit=crop",
-    name: "グラデーション2",
+    id: "pattern-mountain",
+    url: "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1920&h=1080&fit=crop",
+    name: "山",
   },
   {
-    id: "nature-1",
-    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop",
-    name: "自然風景",
+    id: "pattern-desert",
+    url: "https://images.unsplash.com/photo-1529927066849-305fb31a3ec8?w=1920&h=1080&fit=crop",
+    name: "砂漠",
   },
   {
-    id: "abstract-1",
-    url: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=1920&h=1080&fit=crop",
-    name: "アブストラクト",
+    id: "pattern-night-sky",
+    url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&h=1080&fit=crop",
+    name: "夜空",
   },
   {
-    id: "city-1",
-    url: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&h=1080&fit=crop",
-    name: "シティ",
+    id: "pattern-city-night",
+    url: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=1920&h=1080&fit=crop",
+    name: "都市夜景",
   },
   {
-    id: "tech-1",
-    url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&h=1080&fit=crop",
-    name: "テクノロジー",
+    id: "pattern-blue-ocean",
+    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
+    name: "青い海",
   },
   {
-    id: "ocean-1",
-    url: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=1080&fit=crop",
-    name: "オーシャン",
+    id: "pattern-aurora",
+    url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1920&h=1080&fit=crop",
+    name: "オーロラ",
   },
   {
-    id: "space-1",
-    url: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1920&h=1080&fit=crop",
-    name: "スペース",
+    id: "pattern-flower-field",
+    url: "https://images.unsplash.com/photo-1503919545880-b8fdfbff5d11?w=1920&h=1080&fit=crop",
+    name: "花畑",
   },
 ];
 
