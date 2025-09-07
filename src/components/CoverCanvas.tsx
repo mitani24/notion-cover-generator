@@ -43,7 +43,9 @@ export const CoverCanvas = forwardRef<CoverCanvasRef, CoverCanvasProps>(
     const [isLoading, setIsLoading] = useState(false);
     const [loadError, setLoadError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const debounceRef = useRef<NodeJS.Timeout | null>(null);
+    // setTimeout の戻り値は環境によって型が異なるため
+    // Node.js 固有の型ではなく汎用的な型を使用する
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const downloadImage = () => {
       const canvas = canvasRef.current;
