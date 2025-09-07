@@ -7,42 +7,42 @@ const PRESET_IMAGES = [
   {
     id: "pattern-forest",
     url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&h=1080&fit=crop",
-    name: "森林",
+    name: "Forest",
   },
   {
     id: "pattern-mountain",
     url: "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1920&h=1080&fit=crop",
-    name: "山",
+    name: "Mountain",
   },
   {
     id: "pattern-desert",
     url: "https://images.unsplash.com/photo-1529927066849-305fb31a3ec8?w=1920&h=1080&fit=crop",
-    name: "砂漠",
+    name: "Desert",
   },
   {
     id: "pattern-night-sky",
     url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&h=1080&fit=crop",
-    name: "夜空",
+    name: "Night Sky",
   },
   {
     id: "pattern-city-night",
     url: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=1920&h=1080&fit=crop",
-    name: "都市夜景",
+    name: "City Night",
   },
   {
     id: "pattern-blue-ocean",
     url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
-    name: "青い海",
+    name: "Blue Ocean",
   },
   {
     id: "pattern-aurora",
     url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1920&h=1080&fit=crop",
-    name: "オーロラ",
+    name: "Aurora",
   },
   {
     id: "pattern-flower-field",
     url: "https://images.unsplash.com/photo-1503919545880-b8fdfbff5d11?w=1920&h=1080&fit=crop",
-    name: "花畑",
+    name: "Flower Field",
   },
 ];
 
